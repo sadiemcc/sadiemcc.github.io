@@ -4,5 +4,5 @@
 - add stuff here later
 
 ## Assignments
-- [Interactive Scene](interative-scene)
+- [Interactive Scene](interactive-scene)
   
