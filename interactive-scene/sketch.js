@@ -3,6 +3,9 @@
 //CompSci30
 //09/25/2025
 
+//make the scene window size(windowWidth / windowHeight)
+//add border around selected color or add a counter to see what size the brush is
+
 //global variables
 let natural;
 let nathand;
@@ -32,8 +35,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(660, 600);
-  pg = createGraphics(660, 600);
+  createCanvas(windowWidth, windowHeight);
+  pg = createGraphics(windowWidth, windowHeight);
   background(179, 206, 229);
   homeScreen();
 }
@@ -60,7 +63,7 @@ function swapScenes() {
     clear();
     noStroke();
     fill(255);
-    rect(0, 0, 660, 600);
+    rect(0, 0, windowWidth, windowHeight);
     state = "painttime";
     image(nathand, 25, 200, 600, 300);
     toolbar();
@@ -70,7 +73,7 @@ function swapScenes() {
     clear();
     noStroke();
     fill(255);
-    rect(0, 0, 660, 600);
+    rect(0, 0, windowWidth, windowHeight);
     state = "painttime";
     image(ovahand, 25, 200, 600, 300);
     toolbar();
@@ -80,7 +83,7 @@ function swapScenes() {
     clear();
     noStroke();
     fill(255);
-    rect(0, 0, 660, 600);
+    rect(0, 0, windowWidth, windowHeight);
     state = "painttime";
     image(squhand, 37, 200, 600, 300);
     toolbar();
@@ -90,7 +93,7 @@ function swapScenes() {
     clear();
     noStroke();
     fill(255);
-    rect(0, 0, 660, 600);
+    rect(0, 0, windowWidth, windowHeight);
     state = "painttime";
     image(poihand, 25, 200, 600, 300);
     toolbar();
@@ -176,7 +179,7 @@ function mouseDragged() {
 
 function toolbar() {
   fill(147, 102, 57);
-  rect(0, 0, 660, 100);
+  rect(0, 0, windowWidth, 100);
 
   textSize(16);
   fill("black");
