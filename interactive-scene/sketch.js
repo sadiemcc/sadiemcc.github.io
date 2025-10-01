@@ -51,10 +51,22 @@ function startScreenStuff() {
   textSize(50);
   text("the nail salon", 50, 150);
   noFill();
-  rect(75, 400, 90, 120);
-  rect(215, 400, 90, 120);
-  rect(355, 400, 90, 120);
-  rect(495, 400, 90, 120);
+  rect(windowWidth/6, 400, 90, 120);
+  rect(windowWidth/4, 400, 90, 120);
+  rect(windowWidth/4, 400, 90, 120);
+  rect(windowWidth/4, 400, 90, 120);
+}
+
+function homeScreen() {
+  textSize(25);
+  image(natural, windowWidth/6, windowHeight/2, width*0.09, height * 0.4);
+  text("type 'n' for natural", windowWidth/6, windowHeight/2);
+  image(oval, windowWidth/6*2, windowHeight/2, width*0.08, height * 0.4);
+  text("type 'o' for oval", windowWidth/6*2, windowHeight/2);
+  image(squared, windowWidth/6*3, windowHeight/2, width*0.09, height * 0.4);
+  text("type 's' for squared", windowWidth/6*3, windowHeight/2);
+  image(pointed, windowWidth/6*4, windowHeight/2, width*0.08, height * 0.4);
+  text("type 'p' for pointed", windowWidth/6*4, windowHeight/2);
 }
 
 function swapScenes() {
@@ -100,16 +112,7 @@ function swapScenes() {
   }
 }
 
-function homeScreen() {
-  image(natural, 93, 400, width * 0.08, height * 0.2);
-  text("type 'n' for natural", 73, 390);
-  image(oval, 235, 400, width * 0.08, height * 0.2);
-  text("type 'o' for oval", 220, 390);
-  image(squared, 375, 400, width * 0.08, height * 0.2);
-  text("type 's' for squared", 349, 390);
-  image(pointed, 515, 405, width * 0.08, height * 0.2);
-  text("type 'p' for pointed", 490, 390);
-}
+
 
 function keyPressed() {
   if (state === "painttime") {
