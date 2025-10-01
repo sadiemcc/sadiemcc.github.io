@@ -20,7 +20,7 @@ let state = "shapeselect";
 let brush = 5;
 let penColor = "black";
 let theColors = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "brown", "gray", "black", "white"];
-let rectX = 25;
+let rectX = 50;
 
 //image preloading
 function preload() {
@@ -48,25 +48,25 @@ function draw() {
 }
 
 function startScreenStuff() {
-  textSize(50);
-  text("the nail salon", 50, 150);
+  textSize(100);
+  text("the nail salon", 100, 250);
   noFill();
-  rect(windowWidth/6, 400, 90, 120);
-  rect(windowWidth/4, 400, 90, 120);
-  rect(windowWidth/4, 400, 90, 120);
-  rect(windowWidth/4, 400, 90, 120);
+  rect(windowWidth/6, windowHeight/2, width*0.09, height * 0.4);
+  rect(windowWidth/6*2, windowHeight/2, width*0.08, height * 0.4);
+  rect(windowWidth/6*3, windowHeight/2, width*0.09, height * 0.4);
+  rect(windowWidth/6*4, windowHeight/2, width*0.08, height * 0.4);
 }
 
 function homeScreen() {
   textSize(25);
   image(natural, windowWidth/6, windowHeight/2, width*0.09, height * 0.4);
-  text("type 'n' for natural", windowWidth/6, windowHeight/2);
+  text("type 'n' for natural", windowWidth/6, windowHeight/2.1);
   image(oval, windowWidth/6*2, windowHeight/2, width*0.08, height * 0.4);
-  text("type 'o' for oval", windowWidth/6*2, windowHeight/2);
+  text("type 'o' for oval", windowWidth/6*2, windowHeight/2.1);
   image(squared, windowWidth/6*3, windowHeight/2, width*0.09, height * 0.4);
-  text("type 's' for squared", windowWidth/6*3, windowHeight/2);
+  text("type 's' for squared", windowWidth/6*3, windowHeight/2.1);
   image(pointed, windowWidth/6*4, windowHeight/2, width*0.08, height * 0.4);
-  text("type 'p' for pointed", windowWidth/6*4, windowHeight/2);
+  text("type 'p' for pointed", windowWidth/6*4, windowHeight/2.1);
 }
 
 function swapScenes() {
@@ -77,7 +77,7 @@ function swapScenes() {
     fill(255);
     rect(0, 0, windowWidth, windowHeight);
     state = "painttime";
-    image(nathand, 25, 200, 600, 300);
+    image(nathand, 25, 200, windowWidth-100, windowHeight-300);
     toolbar();
   }
   // oval (o)
@@ -87,7 +87,7 @@ function swapScenes() {
     fill(255);
     rect(0, 0, windowWidth, windowHeight);
     state = "painttime";
-    image(ovahand, 25, 200, 600, 300);
+    image(ovahand, 25, 200, windowWidth-100, windowHeight-300);
     toolbar();
   }
   // squared (s)
@@ -97,7 +97,7 @@ function swapScenes() {
     fill(255);
     rect(0, 0, windowWidth, windowHeight);
     state = "painttime";
-    image(squhand, 37, 200, 600, 300);
+    image(squhand, 37, 200, windowWidth-100, windowHeight-300);
     toolbar();
   }
   // pointed (p)
@@ -107,7 +107,7 @@ function swapScenes() {
     fill(255);
     rect(0, 0, windowWidth, windowHeight);
     state = "painttime";
-    image(poihand, 25, 200, 600, 300);
+    image(poihand, 25, 200, windowWidth-100, windowHeight-300);
     toolbar();
   }
 }
@@ -132,37 +132,37 @@ function keyPressed() {
 
 function mouseClicked() {
   if (state === "painttime" && mouseY < 100 + brush / 2) {
-    if (mouseX > 25 && mouseX < 50 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75) {
       penColor = "red";
     }
-    if (mouseX > 65 && mouseX < 90 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 200 && mouseX < 250 && mouseY > 25 && mouseY < 75) {
       penColor = "orange";
     }
-    if (mouseX > 105 && mouseX < 130 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 350 && mouseX < 400 && mouseY > 25 && mouseY < 75) {
       penColor = "yellow";
     }
-    if (mouseX > 145 && mouseX < 170 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 450 && mouseX < 500 && mouseY > 25 && mouseY < 75) {
       penColor = "green";
     }
-    if (mouseX > 185 && mouseX < 210 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 550 && mouseX < 600 && mouseY > 25 && mouseY < 75) {
       penColor = "blue";
     }
-    if (mouseX > 225 && mouseX < 250 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 650 && mouseX < 700 && mouseY > 25 && mouseY < 75) {
       penColor = "purple";
     }
-    if (mouseX > 265 && mouseX < 290 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 750 && mouseX < 800 && mouseY > 25 && mouseY < 75) {
       penColor = "pink";
     }
-    if (mouseX > 305 && mouseX < 330 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 850 && mouseX < 900 && mouseY > 25 && mouseY < 75) {
       penColor = "brown";
     }
-    if (mouseX > 345 && mouseX < 370 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 950 && mouseX < 1000 && mouseY > 25 && mouseY < 75) {
       penColor = "gray";
     }
-    if (mouseX > 385 && mouseX < 410 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 1050 && mouseX < 1100 && mouseY > 25 && mouseY < 75) {
       penColor = "black";
     }
-    if (mouseX > 425 && mouseX < 450 && mouseY > 25 && mouseY < 75) {
+    if (mouseX > 1150 && mouseX < 1200 && mouseY > 25 && mouseY < 75) {
       penColor = "white";
     }
   }
@@ -191,7 +191,7 @@ function toolbar() {
   
   for (let swatch = 0; swatch < 11; swatch++){
     fill(theColors[swatch]);
-    rect(rectX, 25, 25, 50);
-    rectX = rectX + 40;
+    rect(rectX, 25, 50, 50);
+    rectX = rectX + 100;
   }  
 }
