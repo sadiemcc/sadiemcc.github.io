@@ -1,10 +1,10 @@
 //the nail salon
 //Sadie McConnell
 //CompSci30
-//09/25/2025
+//10/02/2025
 
-//make the scene window size(windowWidth / windowHeight)
-//add border around selected color or add a counter to see what size the brush is
+//EXTRA FOR EXPERTS PROPOSAL:
+//using a graphics object (drawing on the graphics object and only appearing when it's time to draw)
 
 //global variables
 let natural;
@@ -20,7 +20,9 @@ let state = "shapeselect";
 let brush = 5;
 let penColor = "black";
 let theColors = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "brown", "gray", "black", "white"];
+let theColorsState = "black";
 let rectX = 50;
+let rectBorder = 0;
 
 //image preloading
 function preload() {
@@ -34,6 +36,7 @@ function preload() {
   poihand = loadImage("poihand.png");
 }
 
+//setup
 function setup() {
   createCanvas(windowWidth, windowHeight);
   pg = createGraphics(windowWidth, windowHeight);
@@ -41,12 +44,14 @@ function setup() {
   homeScreen();
 }
 
+//draw
 function draw() {  
   startScreenStuff();
   swapScenes();
   image(pg, 0, 0);
 }
 
+//title name and border around nail types
 function startScreenStuff() {
   textSize(100);
   text("the nail salon", 100, 250);
@@ -57,6 +62,7 @@ function startScreenStuff() {
   rect(windowWidth/6*4, windowHeight/2, width*0.08, height * 0.4);
 }
 
+//nail types and keybind selections
 function homeScreen() {
   textSize(25);
   image(natural, windowWidth/6, windowHeight/2, width*0.09, height * 0.4);
@@ -69,6 +75,7 @@ function homeScreen() {
   text("type 'p' for pointed", windowWidth/6*4, windowHeight/2.1);
 }
 
+//swapping to painting scene
 function swapScenes() {
   // natural (n)
   if (keyIsDown(78) && state === "shapeselect") {
@@ -112,8 +119,7 @@ function swapScenes() {
   }
 }
 
-
-
+//changing brush size
 function keyPressed() {
   if (state === "painttime") {
     if (keyCode === UP_ARROW) {
@@ -130,45 +136,46 @@ function keyPressed() {
   }
 }
 
+//brush color selection
 function mouseClicked() {
   if (state === "painttime" && mouseY < 100 + brush / 2) {
     if (mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75) {
       penColor = "red";
     }
-    if (mouseX > 200 && mouseX < 250 && mouseY > 25 && mouseY < 75) {
+    else if (mouseX > 150 && mouseX < 200 && mouseY > 25 && mouseY < 75) {
       penColor = "orange";
     }
-    if (mouseX > 350 && mouseX < 400 && mouseY > 25 && mouseY < 75) {
+    else if (mouseX > 250 && mouseX < 300 && mouseY > 25 && mouseY < 75) {
       penColor = "yellow";
     }
-    if (mouseX > 450 && mouseX < 500 && mouseY > 25 && mouseY < 75) {
+    else if (mouseX > 350 && mouseX < 400 && mouseY > 25 && mouseY < 75) {
       penColor = "green";
     }
-    if (mouseX > 550 && mouseX < 600 && mouseY > 25 && mouseY < 75) {
+    else if (mouseX > 450 && mouseX < 500 && mouseY > 25 && mouseY < 75) {
       penColor = "blue";
     }
-    if (mouseX > 650 && mouseX < 700 && mouseY > 25 && mouseY < 75) {
+    else if (mouseX > 550 && mouseX < 600 && mouseY > 25 && mouseY < 75) {
       penColor = "purple";
     }
-    if (mouseX > 750 && mouseX < 800 && mouseY > 25 && mouseY < 75) {
+    else if (mouseX > 650 && mouseX < 700 && mouseY > 25 && mouseY < 75) {
       penColor = "pink";
     }
-    if (mouseX > 850 && mouseX < 900 && mouseY > 25 && mouseY < 75) {
+    else if (mouseX > 750 && mouseX < 800 && mouseY > 25 && mouseY < 75) {
       penColor = "brown";
     }
-    if (mouseX > 950 && mouseX < 1000 && mouseY > 25 && mouseY < 75) {
+    else if (mouseX > 850 && mouseX < 900 && mouseY > 25 && mouseY < 75) {
       penColor = "gray";
     }
-    if (mouseX > 1050 && mouseX < 1100 && mouseY > 25 && mouseY < 75) {
+    else if (mouseX > 950 && mouseX < 1000 && mouseY > 25 && mouseY < 75) {
       penColor = "black";
     }
-    if (mouseX > 1150 && mouseX < 1200 && mouseY > 25 && mouseY < 75) {
+    else if (mouseX > 1050 && mouseX < 1100 && mouseY > 25 && mouseY < 75) {
       penColor = "white";
     }
   }
 }
 
-//PAINTING ONLY
+//painting (on a graphics "screen"[kind of like drawing on a clear plastic sheet and only appearing when called upon])
 function mouseDragged() {
   if (state === "painttime" && mouseY > 100 + brush / 2) {
     pg.noStroke();
@@ -180,14 +187,15 @@ function mouseDragged() {
   }
 }
 
+//top toolbar menu thingie 
 function toolbar() {
   fill(147, 102, 57);
   rect(0, 0, windowWidth, 100);
 
   textSize(16);
   fill("black");
-  text("UP and DOWN arrow keys", 460, 35);
-  text("to change your brush size", 460, 50);
+  text("UP and DOWN arrow keys", 1150, 35);
+  text("to change your brush size", 1150, 50);
   
   for (let swatch = 0; swatch < 11; swatch++){
     fill(theColors[swatch]);
