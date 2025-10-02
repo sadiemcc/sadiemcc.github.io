@@ -53,7 +53,7 @@ function draw() {
 
 //title name and border around nail types
 function startScreenStuff() {
-  textSize(100);
+  textSize(150);
   text("the nail salon", 100, 250);
   noFill();
   rect(windowWidth/6, windowHeight/2, width*0.09, height * 0.4);
