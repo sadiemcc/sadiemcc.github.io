@@ -49,6 +49,15 @@ function draw() {
   startScreenStuff();
   swapScenes();
   image(pg, 0, 0);
+  if (state === "donescreen"){
+    clear();
+    background(191, 216, 189);
+    fill(0);
+    textSize(50);
+    textAlign(CENTER+100, CENTER);
+    text("CONGRATULATIONS!", windowWidth/2-250, windowHeight-800);
+    text("Your nail art is beautiful!", windowWidth/2-250, windowHeight-700);
+  }
 }
 
 //title name and border around nail types
@@ -173,6 +182,9 @@ function mouseClicked() {
       penColor = "white";
     }
   }
+  if (state === "painttime" && mouseX > 1600 && mouseX < 1875 && mouseY > 14 && mouseY < 99){
+    state = "donescreen";
+  }
 }
 
 //painting (on a graphics "screen"[kind of like drawing on a clear plastic sheet and only appearing when called upon])
@@ -187,19 +199,23 @@ function mouseDragged() {
   }
 }
 
-//top toolbar menu thingie 
+//top toolbar menu thingie & done button
 function toolbar() {
+  noFill();
+  noStroke();
   fill(147, 102, 57);
   rect(0, 0, windowWidth, 100);
-
+  fill(166,196,138);
+  rect(1600, 14, 275, 75);
+  fill(0);
+  textSize(50);
+  text("DONE", 1655, 70);
   textSize(16);
-  fill("black");
   text("UP and DOWN arrow keys", 1150, 35);
   text("to change your brush size", 1150, 50);
-  
   for (let swatch = 0; swatch < 11; swatch++){
     fill(theColors[swatch]);
     rect(rectX, 25, 50, 50);
     rectX = rectX + 100;
-  }  
+  } 
 }
