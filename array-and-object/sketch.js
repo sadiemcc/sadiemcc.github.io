@@ -12,17 +12,3 @@
 
 //make an array of each suit and all cards, shuffle array, pop card off when used so no doubles
 //make a spawn card function
-let pickedCard = [];
-let theHearts = [];
-
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-}
-
-function draw() {
-  background(220);
-}
-
-function spawnCard() {
-  
-}
