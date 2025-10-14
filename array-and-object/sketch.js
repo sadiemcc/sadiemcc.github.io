@@ -10,8 +10,7 @@
 // Round 4 : player guesses what suit the last face down card is
 // if player gets it wrong, dealer wins and reset game if some button 
 
-//make an array of each suit and all cards, shuffle array, pop card off when used so no doubles
-//make a spawn card function
+//gamestates = startScreen(start and instruction buttons), round1(red or black), round2(higher or lower), round3(inside or outside), round4(guessing what suit), wrongRestart(when the dealer would win and the player would restart the whole game), winner(complete all levels perfectly)
 
 let chosenSuit = [];
 let chosenNumber = [];
@@ -21,10 +20,13 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   spawnCard();
   redOrBlack();
+  // higherOrLower();
+  // insideOrOutside();
+  // whatSuit();
 }
 
 function draw() {
-  //   background(220);
+  
 }
 
 function spawnCard() {
@@ -34,11 +36,13 @@ function spawnCard() {
   };
   chosenSuit.push(random(card.suits));
   chosenNumber.push(random(card.number));
+  text(chosenNumber + " of " + chosenSuit, 100, 100);
   console.log(chosenNumber);
   console.log(chosenSuit);
 }
 
 function redOrBlack() {
+  gameState = "round1";
   let redButton = {
     x1: 300,
     y1: 500,
@@ -58,21 +62,109 @@ function redOrBlack() {
 }
 
 function higherOrLower(){
-  if ()
+  gameState = "round2";
+  let redButton = {
+    x1: 300,
+    y1: 500,
+    buttonWidth: 250,
+    buttonHeight: 100
+  };
+  let blackButton = {
+    x1: 1000,
+    y1: 500,
+    buttonWidth: 250,
+    buttonHeight: 100
+  };
+  fill(255, 0, 0);
+  rect(redButton.x1, redButton.y1, redButton.buttonWidth, redButton.buttonHeight);
+  fill(0);
+  rect(blackButton.x1, blackButton.y1, blackButton.buttonWidth, blackButton.buttonHeight);
 }
 
+function insideOrOutside(){
+  gameState = "round3";
+  let redButton = {
+    x1: 300,
+    y1: 500,
+    buttonWidth: 250,
+    buttonHeight: 100
+  };
+  let blackButton = {
+    x1: 1000,
+    y1: 500,
+    buttonWidth: 250,
+    buttonHeight: 100
+  };
+  fill(255, 0, 0);
+  rect(redButton.x1, redButton.y1, redButton.buttonWidth, redButton.buttonHeight);
+  fill(0);
+  rect(blackButton.x1, blackButton.y1, blackButton.buttonWidth, blackButton.buttonHeight);
+}
+
+function whatSuit(){
+  gameState = "round4";
+  let redButton = {
+    x1: 300,
+    y1: 500,
+    buttonWidth: 250,
+    buttonHeight: 100
+  };
+  let blackButton = {
+    x1: 1000,
+    y1: 500,
+    buttonWidth: 250,
+    buttonHeight: 100
+  };
+  fill(255, 0, 0);
+  rect(redButton.x1, redButton.y1, redButton.buttonWidth, redButton.buttonHeight);
+  fill(0);
+  rect(blackButton.x1, blackButton.y1, blackButton.buttonWidth, blackButton.buttonHeight);
+}
+
+//NOT WORKING PROPERLY//
 function mousePressed() {
   //BUTTONS FOR 1ST ROUND//
-  if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "hearts" && gameState === "startScreen" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "diamonds" && gameState === "startScreen") {
+  if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "hearts" && gameState === "round1" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "diamonds" && gameState === "round1") {
     console.log(true);
     gameState = "round2";
   }
-  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "clubs" && gameState === "startScreen" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "spades" && gameState === "startScreen") {
+  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "clubs" && gameState === "round1" || mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "spades" && gameState === "round1") {
     console.log(true);
     gameState = "round2";
   }
   else {
-    console.log(false);
-    gameState = "round2";
+    // console.log(false);
+    gameState = "wrongRestart";
   }
+
+  //BUTTONS FOR 2ND ROUND//
+  // if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[0] < chosenNumber[1] && gameState === "round2") {
+  //   console.log(true);
+  //   gameState = "round3";
+  // }
+  // else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[0] > chosenNumber[1] && gameState === "round2") {
+  //   console.log(true);
+  //   gameState = "round3";
+  // }
+  // else{
+  //   console.log(false);
+  //   gameState = "round3";
+  // }
+
+  //BUTTONS FOR 3RD ROUND//
+  // if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3") {
+  //   console.log(true);
+  //   gameState = "round4";
+  // }
+  // else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] > chosenNumber[1] || mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
+  //   console.log(true);
+  //   gameState = "round4";
+  // }
+  // else{
+  //   console.log(false);
+  //   gameState = "round4";
+  // }
+
+  //BUTTONS FOR 4TH ROUND//
+
 }
