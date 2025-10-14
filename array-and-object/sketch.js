@@ -24,47 +24,55 @@ function setup() {
 }
 
 function draw() {
-//   background(220);
+  //   background(220);
 }
 
 function spawnCard() {
-    let card = {
-        suits: ["hearts", "diamonds", "spades", "clubs"],
-        number: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
-    };
-    chosenSuit.push(random(card.suits));
-    chosenNumber.push(random(card.number));
-    console.log(chosenNumber);
-    console.log(chosenSuit);
+  let card = {
+    suits: ["hearts", "diamonds", "spades", "clubs"],
+    number: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+  };
+  chosenSuit.push(random(card.suits));
+  chosenNumber.push(random(card.number));
+  console.log(chosenNumber);
+  console.log(chosenSuit);
 }
 
-function redOrBlack(){
-    let redButton = {
-        x1: 300,
-        y1: 500,
-        buttonWidth: 250,
-        buttonHeight:100
-    };
-    let blackButton = {
-        x1: 1000,
-        y1: 500,
-        buttonWidth: 250,
-        buttonHeight:100
-    };
-    fill(255,0,0);
-    rect(redButton.x1, redButton.y1, redButton.buttonWidth, redButton.buttonHeight);
-    fill(0)
-    rect(blackButton.x1, blackButton.y1, blackButton.buttonWidth, blackButton.buttonHeight);
+function redOrBlack() {
+  let redButton = {
+    x1: 300,
+    y1: 500,
+    buttonWidth: 250,
+    buttonHeight: 100
+  };
+  let blackButton = {
+    x1: 1000,
+    y1: 500,
+    buttonWidth: 250,
+    buttonHeight: 100
+  };
+  fill(255, 0, 0);
+  rect(redButton.x1, redButton.y1, redButton.buttonWidth, redButton.buttonHeight);
+  fill(0);
+  rect(blackButton.x1, blackButton.y1, blackButton.buttonWidth, blackButton.buttonHeight);
 }
 
-function mousePressed(){
-    if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "hearts" && gameState === "startScreen"|| mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "diamonds" && gameState === "startScreen"){
-        console.log(true);
-    }
-    else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "clubs" && gameState === "startScreen"|| mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "spades" && gameState === "startScreen"){
-        console.log(true);
-    }
-    else{
-        console.log(false);
-    }
+function higherOrLower(){
+  if ()
+}
+
+function mousePressed() {
+  //BUTTONS FOR 1ST ROUND//
+  if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "hearts" && gameState === "startScreen" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "diamonds" && gameState === "startScreen") {
+    console.log(true);
+    gameState = "round2";
+  }
+  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "clubs" && gameState === "startScreen" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "spades" && gameState === "startScreen") {
+    console.log(true);
+    gameState = "round2";
+  }
+  else {
+    console.log(false);
+    gameState = "round2";
+  }
 }
