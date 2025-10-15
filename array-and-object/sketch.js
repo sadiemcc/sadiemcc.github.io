@@ -10,7 +10,7 @@
 // Round 4 : player guesses what suit the last face down card is
 // if player gets it wrong, dealer wins and reset game if some button 
 
-//gamestates = startScreen(start and instruction buttons), round1(red or black), round2(higher or lower), round3(inside or outside), round4(guessing what suit), wrongRestart(when the dealer would win and the player would restart the whole game), winner(complete all levels perfectly)
+//gamestates = startScreen(start and instruction buttons), round1(red or black), round2(higher or lower), round3(inside or outside), round4(guessing what suit), wrongRestart(when the dealer would win and the player would restart the whole game), nextRound(a "correct! next round..." screen to transition to next round), winner(complete all levels perfectly)
 
 let chosenSuit = [];
 let chosenNumber = [];
@@ -26,7 +26,7 @@ function setup() {
 }
 
 function draw() {
-  
+  transitionScreens();
 }
 
 function spawnCard() {
@@ -121,8 +121,26 @@ function whatSuit(){
   rect(blackButton.x1, blackButton.y1, blackButton.buttonWidth, blackButton.buttonHeight);
 }
 
+function transitionScreens(){
+  if (gameState === "wrongRestart"){
+    clear();
+    textSize(50);
+    fill(0);
+    text("DEALER WINS", 100, 100);
+    text("Click to restart", 200, 200);
+  }
+  else if (gameState === "nextRound"){
+    //"correct!" text
+  }
+}
+
 //NOT WORKING PROPERLY//
 function mousePressed() {
+  //BUTTONS FOR RESETTING//
+  if (gameState === "wrongRestart"){
+    
+  }
+
   //BUTTONS FOR 1ST ROUND//
   if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "hearts" && gameState === "round1" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "diamonds" && gameState === "round1") {
     console.log(true);
