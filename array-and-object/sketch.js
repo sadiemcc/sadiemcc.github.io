@@ -52,7 +52,6 @@ function keyPressed(){
     text("Press esc to close instructions", width/2, height/2+350);
   }
   if (keyCode === ESCAPE && gameState === "instructions"){
-    gameState = "startScreen";
     titleScreen();
   }
 }
@@ -66,6 +65,13 @@ function titleScreen(){
   text("RIDE THE BUS", width/2, height/2-150);
   textSize(25);
   text("For instructions, press 'i'.", width/2, height/2);
+
+  fill(255, 212, 109);
+  rect(690, 620, 550, 200);
+  textAlign(CENTER);
+  textSize(70);
+  fill(255, 161, 66);
+  text("PLAY!", width/2, height/2+275);
 }
 
 function spawnCard() {
@@ -175,6 +181,13 @@ function transitionScreens(){
 
 //NOT WORKING PROPERLY//
 function mousePressed(){
+  //CODE FOR PLAY BUTTON//
+  if (mouseX > 690 && mouseX < 1240 && mouseY > 620 && mouseY < 820 && gameState === "startScreen"){
+    clear();
+    gameState = "round1";
+    redOrBlack();
+  }
+
   //BUTTONS FOR 1ST ROUND//
   if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "hearts" && gameState === "round1" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "diamonds" && gameState === "round1") {
     console.log(true);
