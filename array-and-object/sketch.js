@@ -37,7 +37,23 @@ function keyPressed(){
     fill("white");
     rect(100, 100, width-200, height-200);
 
+    textSize(40);
+    fill(0);
     textAlign(CENTER);
+    text("INSTRUCTIONS", width/2, height/2 - 300);
+
+    textSize(30);
+    text("Round 1: Guess if the face-down card is red (hearts or diamonds) or if it's black (spades or clubs)", width/2, height/2-200);
+    text("Round 2: Guess if the face-down card is higher or lower than your previous card", width/2, height/2-100);
+    text("Round 3: Guess if the face-down card is inside or outside your previous cards", width/2, height/2);
+    text("Round 4: Guess what suit the face-down card is", width/2, height/2+100);
+    text("Dealer wins if you lose at any round", width/2, height/2+200);
+    textSize(20);
+    text("Press esc to close instructions", width/2, height/2+350);
+  }
+  if (keyCode === ESCAPE && gameState === "instructions"){
+    gameState = "startScreen";
+    titleScreen();
   }
 }
 
