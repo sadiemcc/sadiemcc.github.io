@@ -20,11 +20,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
   titleScreen();
-  // spawnCard();
-  // redOrBlack();
-  // higherOrLower();
-  // insideOrOutside();
-  // whatSuit();
 }
 
 function draw() {
@@ -86,6 +81,7 @@ function spawnCard() {
 }
 
 function redOrBlack() {
+  spawnCard();
   if (gameState === "round1"){
     let redButton = {
       x1: 300,
@@ -107,6 +103,14 @@ function redOrBlack() {
 }
 
 function higherOrLower(){
+  spawnCard();
+  for (let n = 0; n < chosenNumber; n++){
+    if (chosenNumber[1] === chosenNumber[0]){
+      chosenNumber.pop();
+      chosenSuit.pop();
+      spawnCard();
+    }
+  }
   gameState = "round2";
   let redButton = {
     x1: 300,
@@ -127,6 +131,14 @@ function higherOrLower(){
 }
 
 function insideOrOutside(){
+  spawnCard();
+  for (let n = 0; n < chosenNumber; n++){
+    if (chosenNumber[2] === chosenNumber[0] || chosenNumber[2] === chosenNumber[1]){
+      chosenNumber.pop();
+      chosenSuit.pop();
+      spawnCard();
+    }
+  }
   gameState = "round3";
   let redButton = {
     x1: 300,
@@ -147,6 +159,7 @@ function insideOrOutside(){
 }
 
 function whatSuit(){
+  spawnCard();
   gameState = "round4";
   let redButton = {
     x1: 300,
@@ -174,12 +187,18 @@ function transitionScreens(){
     text("DEALER WINS", 100, 100);
     text("Click to restart", 200, 200);
   }
-  else if (gameState === "nextRound"){
-    //"correct!" text
+  else if (gameState === "goTo2" || gameState === "goTo3" || gameState === "goTo4"){
+    clear();
+    textSize(50);
+    fill(0);
+    textAlign(CENTER, BASELINE);
+    text("CORRECT!", width/2, height/2);
+    textAlign(CENTER);
+    textSize(20);
+    text("Click to continue", width/2, height/2+200);
   }
 }
 
-//NOT WORKING PROPERLY//
 function mousePressed(){
   //CODE FOR PLAY BUTTON//
   if (mouseX > 690 && mouseX < 1240 && mouseY > 620 && mouseY < 820 && gameState === "startScreen"){
@@ -188,14 +207,35 @@ function mousePressed(){
     redOrBlack();
   }
 
+  //CODE FOR RESETTING//
+  if (gameState === "wrongRestart"){
+    chosenSuit = [];
+    chosenNumber = [];
+    titleScreen();
+  }
+
+  //CODE FOR CONTINUING TO NEXT ROUND//
+  if (gameState === "goTo2"){
+    clear();
+    higherOrLower();
+  }
+  else if (gameState === "goTo3"){
+    clear();
+    insideOrOutside();
+  }
+  else if (gameState === "goTo4"){
+    clear();
+    whatSuit();
+  }
+
   //BUTTONS FOR 1ST ROUND//
   if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "hearts" && gameState === "round1" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "diamonds" && gameState === "round1") {
     console.log(true);
-    gameState = "round2";
+    gameState = "goTo2";
   }
   else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "clubs" && gameState === "round1" || mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "spades" && gameState === "round1") {
     console.log(true);
-    gameState = "round2";
+    gameState = "goTo2";
   }
   else if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] !== "hearts" && gameState === "round1" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] !== "diamonds" && gameState === "round1") {
     console.log(false);
@@ -207,33 +247,47 @@ function mousePressed(){
   }
 
   //BUTTONS FOR 2ND ROUND//
-  // if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[0] < chosenNumber[1] && gameState === "round2") {
-  //   console.log(true);
-  //   gameState = "round3";
-  // }
-  // else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[0] > chosenNumber[1] && gameState === "round2") {
-  //   console.log(true);
-  //   gameState = "round3";
-  // }
-  // else{
-  //   console.log(false);
-  //   gameState = "round3";
-  // }
+  //LEFT BUTTON//
+  if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[0] < chosenNumber[1] && gameState === "round2") {
+    console.log(true);
+    gameState = "goTo3";
+  }
+  //RIGHT BUTTON//
+  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[0] > chosenNumber[1] && gameState === "round2") {
+    console.log(true);
+    gameState = "goTo3";
+  }
+  //LEFT BUTTON//
+  else if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[0] > chosenNumber[1] && gameState === "round2") {
+    console.log(false);
+    gameState = "wrongRestart";
+  }
+  //RIGHT BUTTON//
+  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[0] < chosenNumber[1] && gameState === "round2") {
+    console.log(false);
+    gameState = "wrongRestart";
+  }
 
   //BUTTONS FOR 3RD ROUND//
-  // if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3") {
-  //   console.log(true);
-  //   gameState = "round4";
-  // }
-  // else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] > chosenNumber[1] || mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
-  //   console.log(true);
-  //   gameState = "round4";
-  // }
-  // else{
-  //   console.log(false);
-  //   gameState = "round4";
-  // }
+  //INSIDE//
+  if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3") {
+    console.log(true);
+    gameState = "goTo4";
+  }
+  //OUTSIDE//
+  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3" || mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
+    console.log(true);
+    gameState = "goTo4";
+  }
 
+  else if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
+    console.log(false);
+    gameState = "wrongRestart";
+  }
+  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3") {
+    console.log(false);
+    gameState = "wrongRestart";
+  }
   //BUTTONS FOR 4TH ROUND//
 
 }
