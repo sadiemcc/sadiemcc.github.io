@@ -44,6 +44,7 @@ function keyPressed(){
     text("Round 4: Guess what suit the face-down card is", width/2, height/2+100);
     text("Dealer wins if you lose at any round", width/2, height/2+200);
     textSize(20);
+    text("*FYI; ACES ARE EQUIVALENT TO 1, JACKS ARE 11, QUEENS ARE 12, KINGS ARE 13*", width/2, height/2+300);
     text("Press esc to close instructions", width/2, height/2+350);
   }
   if (keyCode === ESCAPE && gameState === "instructions"){
@@ -63,11 +64,12 @@ function titleScreen(){
 
   fill(255, 212, 109);
   rectMode(CENTER);
-  rect(width/2, 620, 550, 200);
+  rect(width/2, 720, 550, 200);
   textAlign(CENTER);
   textSize(70);
   fill(255, 161, 66);
   text("PLAY!", width/2, height/2+275);
+  rectMode(CORNER);
 }
 
 function spawnCard() {
@@ -82,19 +84,20 @@ function spawnCard() {
 }
 
 function redOrBlack() {
+  background(166,196,138);
   spawnCard();
   if (gameState === "round1"){
     let redButton = {
       x1: 300,
-      y1: 500,
-      buttonWidth: 250,
-      buttonHeight: 100
+      y1: 650,
+      buttonWidth: 350,
+      buttonHeight: 150
     };
     let blackButton = {
-      x1: 1000,
-      y1: 500,
-      buttonWidth: 250,
-      buttonHeight: 100
+      x1: width-700,
+      y1: 650,
+      buttonWidth: 350,
+      buttonHeight: 150
     };
     fill(255, 0, 0);
     rect(redButton.x1, redButton.y1, redButton.buttonWidth, redButton.buttonHeight);
@@ -104,6 +107,7 @@ function redOrBlack() {
 }
 
 function higherOrLower(){
+  background(166,196,138);
   spawnCard();
   for (let n = 0; n < chosenNumber; n++){
     if (chosenNumber[1] === chosenNumber[0]){
@@ -115,15 +119,15 @@ function higherOrLower(){
   gameState = "round2";
   let redButton = {
     x1: 300,
-    y1: 500,
-    buttonWidth: 250,
-    buttonHeight: 100
+    y1: 650,
+    buttonWidth: 350,
+    buttonHeight: 150
   };
   let blackButton = {
-    x1: 1000,
-    y1: 500,
-    buttonWidth: 250,
-    buttonHeight: 100
+    x1: width-700,
+    y1: 650,
+    buttonWidth: 350,
+    buttonHeight: 150
   };
   fill(255, 0, 0);
   rect(redButton.x1, redButton.y1, redButton.buttonWidth, redButton.buttonHeight);
@@ -132,6 +136,7 @@ function higherOrLower(){
 }
 
 function insideOrOutside(){
+  background(166,196,138);
   spawnCard();
   for (let n = 0; n < chosenNumber; n++){
     if (chosenNumber[2] === chosenNumber[0] || chosenNumber[2] === chosenNumber[1]){
@@ -143,15 +148,15 @@ function insideOrOutside(){
   gameState = "round3";
   let redButton = {
     x1: 300,
-    y1: 500,
-    buttonWidth: 250,
-    buttonHeight: 100
+    y1: 650,
+    buttonWidth: 350,
+    buttonHeight: 150
   };
   let blackButton = {
-    x1: 1000,
-    y1: 500,
-    buttonWidth: 250,
-    buttonHeight: 100
+    x1: width-700,
+    y1: 650,
+    buttonWidth: 350,
+    buttonHeight: 150
   };
   fill(255, 0, 0);
   rect(redButton.x1, redButton.y1, redButton.buttonWidth, redButton.buttonHeight);
@@ -160,19 +165,20 @@ function insideOrOutside(){
 }
 
 function whatSuit(){
+  background(166,196,138);
   spawnCard();
   gameState = "round4";
   let redButton = {
     x1: 300,
-    y1: 500,
-    buttonWidth: 250,
-    buttonHeight: 100
+    y1: 650,
+    buttonWidth: 350,
+    buttonHeight: 150
   };
   let blackButton = {
-    x1: 1000,
-    y1: 500,
-    buttonWidth: 250,
-    buttonHeight: 100
+    x1: width-700,
+    y1: 650,
+    buttonWidth: 350,
+    buttonHeight: 150
   };
   fill(255, 0, 0);
   rect(redButton.x1, redButton.y1, redButton.buttonWidth, redButton.buttonHeight);
@@ -183,6 +189,7 @@ function whatSuit(){
 function transitionScreens(){
   if (gameState === "wrongRestart"){
     clear();
+    background(255, 230, 167);
     textSize(50);
     fill(0);
     textAlign(CENTER);
@@ -192,6 +199,7 @@ function transitionScreens(){
   }
   else if (gameState === "goTo2" || gameState === "goTo3" || gameState === "goTo4"){
     clear();
+    background(166,196,138);
     textSize(50);
     fill(0);
     textAlign(CENTER, BASELINE);
@@ -204,7 +212,7 @@ function transitionScreens(){
 
 function mousePressed(){
   //CODE FOR PLAY BUTTON//
-  if (mouseX > width/2 && mouseX < width/2+550 && mouseY > 620 && mouseY < 820 && gameState === "startScreen"){
+  if (mouseX > width/2-275 && mouseX < width/2+275 && mouseY > 620 && mouseY < 820 && gameState === "startScreen"){
     clear();
     gameState = "round1";
     redOrBlack();
@@ -232,62 +240,73 @@ function mousePressed(){
   }
 
   //BUTTONS FOR 1ST ROUND//
-  if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "hearts" && gameState === "round1" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "diamonds" && gameState === "round1") {
+  let redButton = {
+    x1: 300,
+    y1: 650,
+    buttonWidth: 350,
+    buttonHeight: 150
+  };
+  let blackButton = {
+    x1: width-700,
+    y1: 650,
+    buttonWidth: 350,
+    buttonHeight: 150
+  };
+  if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenSuit[0] === "hearts" && gameState === "round1" || mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenSuit[0] === "diamonds" && gameState === "round1") {
     console.log(true);
     gameState = "goTo2";
   }
-  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "clubs" && gameState === "round1" || mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] === "spades" && gameState === "round1") {
+  else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenSuit[0] === "clubs" && gameState === "round1" || mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenSuit[0] === "spades" && gameState === "round1") {
     console.log(true);
     gameState = "goTo2";
   }
-  else if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] !== "hearts" && gameState === "round1" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenSuit[0] !== "diamonds" && gameState === "round1") {
+  else if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenSuit[0] === "spades" && gameState === "round1" || mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenSuit[0] === "clubs" && gameState === "round1") {
     console.log(false);
     gameState = "wrongRestart";
   }
-  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] !== "clubs" && gameState === "round1" || mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenSuit[0] !== "spades" && gameState === "round1") {
+  else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenSuit[0] === "hearts" && gameState === "round1" || mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenSuit[0] === "diamonds" && gameState === "round1") {
     console.log(false);
     gameState = "wrongRestart";
   }
 
   //BUTTONS FOR 2ND ROUND//
   //LEFT BUTTON//
-  if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[0] < chosenNumber[1] && gameState === "round2") {
+  if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[0] < chosenNumber[1] && gameState === "round2") {
     console.log(true);
     gameState = "goTo3";
   }
   //RIGHT BUTTON//
-  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[0] > chosenNumber[1] && gameState === "round2") {
+  else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[0] > chosenNumber[1] && gameState === "round2") {
     console.log(true);
     gameState = "goTo3";
   }
   //LEFT BUTTON//
-  else if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[0] > chosenNumber[1] && gameState === "round2") {
+  else if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[0] > chosenNumber[1] && gameState === "round2") {
     console.log(false);
     gameState = "wrongRestart";
   }
   //RIGHT BUTTON//
-  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[0] < chosenNumber[1] && gameState === "round2") {
+  else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[0] < chosenNumber[1] && gameState === "round2") {
     console.log(false);
     gameState = "wrongRestart";
   }
 
   //BUTTONS FOR 3RD ROUND//
   //INSIDE//
-  if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3") {
+  if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3") {
     console.log(true);
     gameState = "goTo4";
   }
   //OUTSIDE//
-  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3" || mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
+  else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3" || mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
     console.log(true);
     gameState = "goTo4";
   }
-
-  else if (mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3" || mouseX > 300 && mouseX < 550 && mouseY > 500 && mouseY < 600 && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
+  else if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3" || mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
     console.log(false);
     gameState = "wrongRestart";
   }
-  else if (mouseX > 1000 && mouseX < 1250 && mouseY > 500 && mouseY < 600 && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3") {
+  else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3") {
     console.log(false);
     gameState = "wrongRestart";
   }
