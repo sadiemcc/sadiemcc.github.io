@@ -12,9 +12,15 @@
 
 //gamestates = startScreen(title and instructions prompt), instructions(the instructions), round1(red or black), round2(higher or lower), round3(inside or outside), round4(guessing what suit), wrongRestart(when the dealer would win and the player would restart the whole game), nextRound(a "correct! next round..." screen to transition to next round), winner(complete all levels perfectly)
 
+//FIND OUT HOW TO ADD FRONTS OF CARDS
+
 let chosenSuit = [];
 let chosenNumber = [];
 let gameState = "startScreen";
+
+function preload(){
+  cardBack = loadImage("images/playingCardBack.png");
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -81,6 +87,7 @@ function spawnCard() {
   chosenNumber.push(random(card.number));
   console.log(chosenNumber);
   console.log(chosenSuit);
+  image(cardBack, width/2-175, height/2-250, 250, 350);
 }
 
 function redOrBlack() {
@@ -311,5 +318,24 @@ function mousePressed(){
     gameState = "wrongRestart";
   }
   //BUTTONS FOR 4TH ROUND//
-
+  //if (button dimentions && chosenSuit === "hearts"){
+  // return true;
+  // *make some sort of winning screen*
+  //}
+  //else if (button dimentions && chosenSuit === "diamonds"){
+  // return true;
+  // *make some sort of winning screen*
+  //}
+  //else if (button dimentions && chosenSuit === "spades"){
+  // return true;
+  // *make some sort of winning screen*
+  //}
+  //else if (button dimentions && chosenSuit === "clubs"){
+  // return true;
+  // *make some sort of winning screen*
+  //}
+  //else if (button dimentions && chosenSuit === "hearts" || button dimentions && chosenSuit === "diamonds" || button dimentions && chosenSuit === "spades" || button dimentions && chosenSuit === "clubs"){
+  // return false;
+  // gameState = "wrongRestart";
+  //}
 }
