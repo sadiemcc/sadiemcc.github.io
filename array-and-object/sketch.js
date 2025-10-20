@@ -62,7 +62,8 @@ function titleScreen(){
   text("For instructions, press 'i'.", width/2, height/2);
 
   fill(255, 212, 109);
-  rect(690, 620, 550, 200);
+  rectMode(CENTER);
+  rect(width/2, 620, 550, 200);
   textAlign(CENTER);
   textSize(70);
   fill(255, 161, 66);
@@ -184,8 +185,10 @@ function transitionScreens(){
     clear();
     textSize(50);
     fill(0);
-    text("DEALER WINS", 100, 100);
-    text("Click to restart", 200, 200);
+    textAlign(CENTER);
+    text("DEALER WINS", width/2, height/2);
+    textSize(20);
+    text("Click to restart", width/2, height/2+200);
   }
   else if (gameState === "goTo2" || gameState === "goTo3" || gameState === "goTo4"){
     clear();
@@ -201,7 +204,7 @@ function transitionScreens(){
 
 function mousePressed(){
   //CODE FOR PLAY BUTTON//
-  if (mouseX > 690 && mouseX < 1240 && mouseY > 620 && mouseY < 820 && gameState === "startScreen"){
+  if (mouseX > width/2 && mouseX < width/2+550 && mouseY > 620 && mouseY < 820 && gameState === "startScreen"){
     clear();
     gameState = "round1";
     redOrBlack();
