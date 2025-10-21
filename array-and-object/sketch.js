@@ -20,6 +20,10 @@ let gameState = "startScreen";
 
 function preload(){
   cardBack = loadImage("images/playingCardBack.png");
+  heartSymbol = loadImage("images/heartSymbol.png");
+  diamondSymbol = loadImage("images/diamondSymbol.png");
+  spadeSymbol = loadImage("images/spadeSymbol.png");
+  clubSymbol = loadImage("images/clubsSymbol.png");
 }
 
 function setup() {
@@ -94,6 +98,7 @@ function redOrBlack() {
   background(166,196,138);
   spawnCard();
   if (gameState === "round1"){
+    
     let redButton = {
       x1: 300,
       y1: 650,
@@ -114,6 +119,26 @@ function redOrBlack() {
     textSize(100);
     text("RED OR BLACK?", width/2, 150);
   }
+  let sidebar = {
+    x: 0,
+    y: 0,
+    rectWidth: 200,
+    rectHeight: height,
+  };
+  fill(190, 225, 158);
+  rect(sidebar.x, sidebar.y, sidebar.rectWidth, sidebar.rectHeight);
+  fill(178, 211, 148);
+  rect(20, 20, 160, 225);
+  rectMode(CENTER);
+  rect(100, height/2, 160, 225);
+  rect(100, height- 135, 160, 225);
+  textAlign(CENTER);
+  textSize(25);
+  fill(137, 162, 114);
+  text("ROUND 1", 100, 135);
+  text("ROUND 2", 100, height/2+10);
+  text("ROUND 3", 100, height-125);
+  rectMode(CORNER);
 }
 
 function higherOrLower(){
@@ -146,6 +171,26 @@ function higherOrLower(){
   textAlign(CENTER);
   textSize(100);
   text("HIGHER OR LOWER?", width/2, 150);
+  let sidebar = {
+    x: 0,
+    y: 0,
+    rectWidth: 200,
+    rectHeight: height,
+  };
+  fill(190, 225, 158);
+  rect(sidebar.x, sidebar.y, sidebar.rectWidth, sidebar.rectHeight);
+  fill(178, 211, 148);
+  rect(20, 20, 160, 225);
+  rectMode(CENTER);
+  rect(100, height/2, 160, 225);
+  rect(100, height- 135, 160, 225);
+  textAlign(CENTER);
+  textSize(25);
+  fill(137, 162, 114);
+  text("ROUND 1", 100, 135);
+  text("ROUND 2", 100, height/2+10);
+  text("ROUND 3", 100, height-125);
+  rectMode(CORNER);
 }
 
 function insideOrOutside(){
@@ -178,6 +223,26 @@ function insideOrOutside(){
   textAlign(CENTER);
   textSize(100);
   text("INSIDE OR OUTSIDE?", width/2, 150);
+  let sidebar = {
+    x: 0,
+    y: 0,
+    rectWidth: 200,
+    rectHeight: height,
+  };
+  fill(190, 225, 158);
+  rect(sidebar.x, sidebar.y, sidebar.rectWidth, sidebar.rectHeight);
+  fill(178, 211, 148);
+  rect(20, 20, 160, 225);
+  rectMode(CENTER);
+  rect(100, height/2, 160, 225);
+  rect(100, height- 135, 160, 225);
+  textAlign(CENTER);
+  textSize(25);
+  fill(137, 162, 114);
+  text("ROUND 1", 100, 135);
+  text("ROUND 2", 100, height/2+10);
+  text("ROUND 3", 100, height-125);
+  rectMode(CORNER);
 }
 
 function whatSuit(){
@@ -219,6 +284,26 @@ function whatSuit(){
   textAlign(CENTER);
   textSize(100);
   text("WHAT SUIT?", width/2, 150);
+  let sidebar = {
+    x: 0,
+    y: 0,
+    rectWidth: 200,
+    rectHeight: height,
+  };
+  fill(190, 225, 158);
+  rect(sidebar.x, sidebar.y, sidebar.rectWidth, sidebar.rectHeight);
+  fill(178, 211, 148);
+  rect(20, 20, 160, 225);
+  rectMode(CENTER);
+  rect(100, height/2, 160, 225);
+  rect(100, height- 135, 160, 225);
+  textAlign(CENTER);
+  textSize(25);
+  fill(137, 162, 114);
+  text("ROUND 1", 100, 135);
+  text("ROUND 2", 100, height/2+10);
+  text("ROUND 3", 100, height-125);
+  rectMode(CORNER);
 }
 
 function transitionScreens(){
