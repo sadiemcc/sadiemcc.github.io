@@ -12,11 +12,13 @@
 
 //gamestates = startScreen(title and instructions prompt), instructions(the instructions), round1(red or black), round2(higher or lower), round3(inside or outside), round4(guessing what suit), wrongRestart(when the dealer would win and the player would restart the whole game), nextRound(a "correct! next round..." screen to transition to next round), winner(complete all levels perfectly)
 
-//FIND OUT HOW TO ADD FRONTS OF CARDS
-
 let chosenSuit = [];
 let chosenNumber = [];
 let gameState = "startScreen";
+let cardBase = {
+  cardWidth: 135,
+  cardHeight: 200
+};
 
 function preload(){
   cardBack = loadImage("images/playingCardBack.png");
@@ -94,11 +96,11 @@ function spawnCard() {
   image(cardBack, width/2-150, height/2-250, 250, 350);
 }
 
+//ROUND 1//
 function redOrBlack() {
   background(166,196,138);
   spawnCard();
   if (gameState === "round1"){
-    
     let redButton = {
       x1: 300,
       y1: 650,
@@ -191,17 +193,17 @@ function higherOrLower(){
   text("ROUND 2", 100, height/2+10);
   text("ROUND 3", 100, height-125);
   rectMode(CORNER);
+  fill(255);
+  rect(32.5, 32.5, cardBase.cardWidth, cardBase.cardHeight);
 }
 
 function insideOrOutside(){
   background(166,196,138);
   spawnCard();
-  for (let n = 0; n < chosenNumber; n++){
-    if (chosenNumber[2] === chosenNumber[n]){
-      chosenNumber.pop(n);
-      chosenSuit.pop(n);
-      spawnCard();
-    }
+  if (chosenNumber[2] === chosenNumber[1] || chosenNumber[2] === chosenNumber[0]){
+    chosenNumber.pop(chosenNumber[2]);
+    chosenSuit.pop(chosenSuit[2]);
+    spawnCard();
   }
   gameState = "round3";
   let redButton = {
@@ -243,6 +245,16 @@ function insideOrOutside(){
   text("ROUND 2", 100, height/2+10);
   text("ROUND 3", 100, height-125);
   rectMode(CORNER);
+
+  fill(255);
+  rect(32.5, 32.5, cardBase.cardWidth, cardBase.cardHeight);
+  rectMode(CENTER);
+  rect(100, height/2, cardBase.cardWidth, cardBase.cardHeight);
+  rectMode(CORNER);
+
+  if (chosenSuit === "hearts"){
+    //show hearts symbol
+  }
 }
 
 function whatSuit(){
@@ -275,12 +287,16 @@ function whatSuit(){
   };
   fill(255, 0, 0);
   rect(heartButton.x1, heartButton.y1, heartButton.buttonWidth, heartButton.buttonHeight);
+  image(heartSymbol, heartButton.x1+25, heartButton.y1+25, 100, 100);
   fill(0);
   rect(diamondButton.x1, diamondButton.y1, diamondButton.buttonWidth, diamondButton.buttonHeight);
+  image(diamondSymbol, diamondButton.x1+25, diamondButton.y1+25, 100, 100);
   fill(255, 0, 0);
   rect(spadeButton.x1, spadeButton.y1, spadeButton.buttonWidth, spadeButton.buttonHeight);
+  image(spadeSymbol, spadeButton.x1+25, spadeButton.y1+25, 100, 100);
   fill(0);
   rect(clubButton.x1, clubButton.y1, clubButton.buttonWidth, clubButton.buttonHeight);
+  image(clubSymbol, clubButton.x1+25, clubButton.y1+25, 100, 100);
   textAlign(CENTER);
   textSize(100);
   text("WHAT SUIT?", width/2, 150);
@@ -304,6 +320,16 @@ function whatSuit(){
   text("ROUND 2", 100, height/2+10);
   text("ROUND 3", 100, height-125);
   rectMode(CORNER);
+
+  fill(255);
+  rect(32.5, 32.5, cardBase.cardWidth, cardBase.cardHeight);
+  rectMode(CENTER);
+  rect(100, height/2, cardBase.cardWidth, cardBase.cardHeight);
+  rect(100, height-135, cardBase.cardWidth, cardBase.cardHeight);
+}
+
+function winnerScreen(){
+  background(255, 230, 167);
 }
 
 function transitionScreens(){
@@ -327,6 +353,9 @@ function transitionScreens(){
     textAlign(CENTER);
     textSize(20);
     text("Click to continue", width/2, height/2+200);
+  }
+  else if (gameState === "youWin"){
+    winnerScreen();
   }
 }
 
@@ -357,6 +386,10 @@ function mousePressed(){
   else if (gameState === "goTo4"){
     clear();
     whatSuit();
+  }
+  else if (gameState === "youWin"){
+    clear();
+
   }
 
   //BUTTONS FOR 1ST ROUND//
@@ -457,18 +490,22 @@ function mousePressed(){
   };
   if (mouseX > heartButton.x1 && mouseX < heartButton.x1+heartButton.buttonWidth && mouseY > heartButton.y1 && mouseY < heartButton.y1+heartButton.buttonHeight && chosenSuit[3] === "hearts" && gameState === "round4") {
     console.log(true);
-    //you win! screen
+    gameState = "youWin";
   }
   else if (mouseX > diamondButton.x1 && mouseX < diamondButton.x1+diamondButton.buttonWidth && mouseY > diamondButton.y1 && mouseY < diamondButton.y1+diamondButton.buttonHeight && chosenSuit[3] === "diamonds" && gameState === "round4"){
     console.log(true);
-    //you win! screen
+    gameState = "youWin";
   }
   else if (mouseX > spadeButton.x1 && mouseX < spadeButton.x1+spadeButton.buttonWidth && mouseY > spadeButton.y1 && spadeButton.y1+spadeButton.buttonHeight && chosenSuit[3] === "spades" && gameState === "round4"){
     console.log(true);
-    //you win! screen
+    gameState = "youWin";
   }
   else if (mouseX > clubButton.x1 && mouseX < clubButton.x1+clubButton.buttonWidth && mouseY > clubButton.y1 && mouseY < clubButton.y1+clubButton.buttonHeight && chosenSuit[3] === "clubs" && gameState === "round4"){
     console.log(true);
-    //you win! screen
+    gameState = "youWin";
+  }
+  else if (gameState === "round4" && mouseX > heartButton.x1 && mouseX < heartButton.x1+heartButton.buttonWidth && mouseY > heartButton.y1 && mouseY < heartButton.y1+heartButton.buttonHeight && chosenSuit[3] !== "hearts" || gameState === "round4" && mouseX > diamondButton.x1 && mouseX < diamondButton.x1+diamondButton.buttonWidth && mouseY > diamondButton.y1 && mouseY < diamondButton.y1+diamondButton.buttonHeight && chosenSuit[3] !== "diamonds" || gameState === "round4" && mouseX > spadeButton.x1 && mouseX < spadeButton.x1+spadeButton.buttonWidth && mouseY > spadeButton.y1 && spadeButton.y1+spadeButton.buttonHeight && chosenSuit[3] !== "spades" || gameState === "round4" && mouseX > clubButton.x1 && mouseX < clubButton.x1+clubButton.buttonWidth && mouseY > clubButton.y1 && mouseY < clubButton.y1+clubButton.buttonHeight && chosenSuit[3] !== "clubs"){
+    console.log(false);
+    gameState = "wrongRestart";
   }
 }
