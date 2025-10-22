@@ -56,7 +56,7 @@ function keyPressed(){
     text("Round 4: Guess what suit the face-down card is", width/2, height/2+100);
     text("Dealer wins if you lose at any round", width/2, height/2+200);
     textSize(20);
-    text("*FYI; ACES ARE EQUIVALENT TO 1, JACKS ARE 11, QUEENS ARE 12, KINGS ARE 13*", width/2, height/2+300);
+    text("*FYI; ACES ARE 1, JACKS ARE 11, QUEENS ARE 12, KINGS ARE 13*", width/2, height/2+300);
     text("Press esc to close instructions", width/2, height/2+350);
   }
   if (keyCode === ESCAPE && gameState === "instructions"){
@@ -146,12 +146,10 @@ function redOrBlack() {
 function higherOrLower(){
   background(166,196,138);
   spawnCard();
-  for (let n = 0; n < chosenNumber; n++){
-    if (chosenNumber[1] === chosenNumber[0]){
-      chosenNumber.pop();
-      chosenSuit.pop();
-      spawnCard();
-    }
+  if (chosenNumber[1] === chosenNumber[0]){
+    chosenNumber.pop(chosenNumber[1]);
+    chosenSuit.pop(chosenSuit[1]);
+    spawnCard();
   }
   gameState = "round2";
   let redButton = {
@@ -195,6 +193,30 @@ function higherOrLower(){
   rectMode(CORNER);
   fill(255);
   rect(32.5, 32.5, cardBase.cardWidth, cardBase.cardHeight);
+  if (chosenSuit[0] === "hearts"){
+    image(heartSymbol, 68, 105, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
+  }
+  else if (chosenSuit[0] === "diamonds"){
+    image(diamondSymbol, 68, 105, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
+  }
+  else if (chosenSuit[0] === "spades"){
+    image(spadeSymbol, 68, 105, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
+  }
+  else if (chosenSuit[0] === "clubs"){
+    image(clubSymbol, 68, 105, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
+  }
 }
 
 function insideOrOutside(){
@@ -252,8 +274,29 @@ function insideOrOutside(){
   rect(100, height/2, cardBase.cardWidth, cardBase.cardHeight);
   rectMode(CORNER);
 
-  if (chosenSuit === "hearts"){
-    //show hearts symbol
+  if (chosenSuit[0] === "hearts"){
+    image(heartSymbol, 68, 105, 65, 65);
+  }
+  else if (chosenSuit[0] === "diamonds"){
+    image(diamondSymbol, 68, 105, 65, 65);
+  }
+  else if (chosenSuit[0] === "spades"){
+    image(spadeSymbol, 68, 105, 65, 65);
+  }
+  else if (chosenSuit[0] === "clubs"){
+    image(clubSymbol, 68, 105, 65, 65);
+  }
+  if (chosenSuit[1] === "hearts"){
+    image(heartSymbol, 68, height/2-32.5, 65, 65);
+  }
+  else if (chosenSuit[1] === "diamonds"){
+    image(diamondSymbol, 68, height/2-32.5, 65, 65);
+  }
+  else if (chosenSuit[1] === "spades"){
+    image(spadeSymbol, 68, height/2-32.5, 65, 65);
+  }
+  else if (chosenSuit[1] === "clubs"){
+    image(clubSymbol, 68, height/2-32.5, 65, 65);
   }
 }
 
@@ -326,6 +369,43 @@ function whatSuit(){
   rectMode(CENTER);
   rect(100, height/2, cardBase.cardWidth, cardBase.cardHeight);
   rect(100, height-135, cardBase.cardWidth, cardBase.cardHeight);
+
+  if (chosenSuit[0] === "hearts"){
+    image(heartSymbol, 68, 105, 65, 65);
+  }
+  else if (chosenSuit[0] === "diamonds"){
+    image(diamondSymbol, 68, 105, 65, 65);
+  }
+  else if (chosenSuit[0] === "spades"){
+    image(spadeSymbol, 68, 105, 65, 65);
+  }
+  else if (chosenSuit[0] === "clubs"){
+    image(clubSymbol, 68, 105, 65, 65);
+  }
+  if (chosenSuit[1] === "hearts"){
+    image(heartSymbol, 68, height/2-32.5, 65, 65);
+  }
+  else if (chosenSuit[1] === "diamonds"){
+    image(diamondSymbol, 68, height/2-32.5, 65, 65);
+  }
+  else if (chosenSuit[1] === "spades"){
+    image(spadeSymbol, 68, height/2-32.5, 65, 65);
+  }
+  else if (chosenSuit[1] === "clubs"){
+    image(clubSymbol, 68, height/2-32.5, 65, 65);
+  }
+  if (chosenSuit[2] === "hearts"){
+    image(heartSymbol, 68, height-165, 65, 65);
+  }
+  else if (chosenSuit[2] === "diamonds"){
+    image(diamondSymbol, 68, height-165, 65, 65);
+  }
+  else if (chosenSuit[2] === "spades"){
+    image(spadeSymbol, 68, height-165, 65, 65);
+  }
+  else if (chosenSuit[2] === "clubs"){
+    image(clubSymbol, 68, height-165, 65, 65);
+  }
 }
 
 function winnerScreen(){
