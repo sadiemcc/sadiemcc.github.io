@@ -12,6 +12,10 @@
 
 //gamestates = startScreen(title and instructions prompt), instructions(the instructions), round1(red or black), round2(higher or lower), round3(inside or outside), round4(guessing what suit), wrongRestart(when the dealer would win and the player would restart the whole game), nextRound(a "correct! next round..." screen to transition to next round), winner(complete all levels perfectly)
 
+let K = 13;
+let Q = 12;
+let J = 11;
+let A = 1;
 let chosenSuit = [];
 let chosenNumber = [];
 let gameState = "startScreen";
@@ -39,7 +43,7 @@ function draw() {
 }
 
 function keyPressed(){
-  if (keyCode === 73){
+  if (keyCode === 73 && gameState === "startScreen"){
     gameState = "instructions";
     fill("white");
     rect(100, 100, width-200, height-200);
@@ -87,7 +91,7 @@ function titleScreen(){
 function spawnCard() {
   let card = {
     suits: ["hearts", "diamonds", "spades", "clubs"],
-    number: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    number: [A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K],
   };
   chosenSuit.push(random(card.suits));
   chosenNumber.push(random(card.number));
@@ -222,10 +226,12 @@ function higherOrLower(){
 function insideOrOutside(){
   background(166,196,138);
   spawnCard();
-  if (chosenNumber[2] === chosenNumber[1] || chosenNumber[2] === chosenNumber[0]){
-    chosenNumber.pop(chosenNumber[2]);
-    chosenSuit.pop(chosenSuit[2]);
-    spawnCard();
+  for (nums in chosenNumber){
+    if (chosenNumber[2] === chosenNumber[1] || chosenNumber[2] === chosenNumber[0]){
+      chosenNumber.pop(chosenNumber[2]);
+      chosenSuit.pop(chosenSuit[2]);
+      spawnCard();
+    }
   }
   gameState = "round3";
   let redButton = {
@@ -276,27 +282,51 @@ function insideOrOutside(){
 
   if (chosenSuit[0] === "hearts"){
     image(heartSymbol, 68, 105, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
   }
   else if (chosenSuit[0] === "diamonds"){
     image(diamondSymbol, 68, 105, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
   }
   else if (chosenSuit[0] === "spades"){
     image(spadeSymbol, 68, 105, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
   }
   else if (chosenSuit[0] === "clubs"){
     image(clubSymbol, 68, 105, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
   }
   if (chosenSuit[1] === "hearts"){
     image(heartSymbol, 68, height/2-32.5, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[1], 55, 415);
   }
   else if (chosenSuit[1] === "diamonds"){
     image(diamondSymbol, 68, height/2-32.5, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[1], 55, 415);
   }
   else if (chosenSuit[1] === "spades"){
     image(spadeSymbol, 68, height/2-32.5, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[1], 55, 415);
   }
   else if (chosenSuit[1] === "clubs"){
     image(clubSymbol, 68, height/2-32.5, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[1], 55, 415);
   }
 }
 
@@ -372,44 +402,84 @@ function whatSuit(){
 
   if (chosenSuit[0] === "hearts"){
     image(heartSymbol, 68, 105, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
   }
   else if (chosenSuit[0] === "diamonds"){
     image(diamondSymbol, 68, 105, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
   }
   else if (chosenSuit[0] === "spades"){
     image(spadeSymbol, 68, 105, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
   }
   else if (chosenSuit[0] === "clubs"){
     image(clubSymbol, 68, 105, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[0], 55, 70);
   }
   if (chosenSuit[1] === "hearts"){
     image(heartSymbol, 68, height/2-32.5, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[1], 55, 415);
   }
   else if (chosenSuit[1] === "diamonds"){
     image(diamondSymbol, 68, height/2-32.5, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[1], 55, 415);
   }
   else if (chosenSuit[1] === "spades"){
     image(spadeSymbol, 68, height/2-32.5, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[1], 55, 415);
   }
   else if (chosenSuit[1] === "clubs"){
     image(clubSymbol, 68, height/2-32.5, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[1], 55, 415);
   }
   if (chosenSuit[2] === "hearts"){
     image(heartSymbol, 68, height-165, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[2], 55, height-200);
   }
   else if (chosenSuit[2] === "diamonds"){
     image(diamondSymbol, 68, height-165, 65, 65);
+    fill(255,0,0);
+    textSize(35);
+    text(chosenNumber[2], 55, height-200);
   }
   else if (chosenSuit[2] === "spades"){
     image(spadeSymbol, 68, height-165, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[2], 55, height-200);
   }
   else if (chosenSuit[2] === "clubs"){
     image(clubSymbol, 68, height-165, 65, 65);
+    fill(0);
+    textSize(35);
+    text(chosenNumber[2], 55, height-200);
   }
 }
 
 function winnerScreen(){
   background(255, 230, 167);
+  textAlign(CENTER);
+  textSize(75);
+  fill(0);
+  text("CONGRATULATIONS!", width/2, height/2 - 200);
 }
 
 function transitionScreens(){
@@ -431,8 +501,9 @@ function transitionScreens(){
     textAlign(CENTER, BASELINE);
     text("CORRECT!", width/2, height/2);
     textAlign(CENTER);
+    fill(0);
     textSize(20);
-    text("Click to continue", width/2, height/2+200);
+    text("Click to continue", width/2, height/2+205);
   }
   else if (gameState === "youWin"){
     winnerScreen();
@@ -469,7 +540,6 @@ function mousePressed(){
   }
   else if (gameState === "youWin"){
     clear();
-
   }
 
   //BUTTONS FOR 1ST ROUND//
