@@ -10,7 +10,13 @@
 // Round 4 : player guesses what suit the last face down card is
 // if player gets it wrong, dealer wins and reset game if some button 
 
-//gamestates = startScreen(title and instructions prompt), instructions(the instructions), round1(red or black), round2(higher or lower), round3(inside or outside), round4(guessing what suit), wrongRestart(when the dealer would win and the player would restart the whole game), nextRound(a "correct! next round..." screen to transition to next round), winner(complete all levels perfectly)
+//gamestates = startScreen(title and instructions prompt), instructions(the instructions), round1(red or black), round2(higher or lower), round3(inside or outside), round4(guessing what suit), wrongRestart(when the dealer would win and the player would restart the whole game), nextRound(a "correct! next round..." screen to transition to next round), winner(complete all levels perfectly), inBetween (so you can't click prematurely)
+
+//TO DO
+//Finish winner screen
+//Fix clicking the next option prematurely
+//For inside/outside & higher/lower, fix duplicates
+//inside/outside, choosing outside and being wrong doesnt work
 
 let K = 13;
 let Q = 12;
@@ -18,7 +24,10 @@ let J = 11;
 let A = 1;
 let chosenSuit = [];
 let chosenNumber = [];
+let losingSuit = [];
+let losingNumber = [];
 let gameState = "startScreen";
+let previousState;
 let cardBase = {
   cardWidth: 135,
   cardHeight: 200
@@ -124,6 +133,11 @@ function redOrBlack() {
     textAlign(CENTER);
     textSize(100);
     text("RED OR BLACK?", width/2, 150);
+    textSize(50);
+    fill(106, 4, 15);
+    text("RED", redButton.x1 + 175, redButton.y1 + 90);
+    fill(141, 153, 174);
+    text("BLACK", blackButton.x1 + 175, blackButton.y1 + 90);
   }
   let sidebar = {
     x: 0,
@@ -155,7 +169,6 @@ function higherOrLower(){
     chosenSuit.pop(chosenSuit[1]);
     spawnCard();
   }
-  gameState = "round2";
   let redButton = {
     x1: 300,
     y1: 650,
@@ -175,6 +188,11 @@ function higherOrLower(){
   textAlign(CENTER);
   textSize(100);
   text("HIGHER OR LOWER?", width/2, 150);
+  textSize(50);
+  fill(106, 4, 15);
+  text("HIGHER", redButton.x1 + 175, redButton.y1 + 90);
+  fill(141, 153, 174);
+  text("LOWER", blackButton.x1 + 175, blackButton.y1 + 90);
   let sidebar = {
     x: 0,
     y: 0,
@@ -221,6 +239,7 @@ function higherOrLower(){
     textSize(35);
     text(chosenNumber[0], 55, 70);
   }
+  gameState = "round2";
 }
 
 function insideOrOutside(){
@@ -233,7 +252,6 @@ function insideOrOutside(){
       spawnCard();
     }
   }
-  gameState = "round3";
   let redButton = {
     x1: 300,
     y1: 650,
@@ -253,6 +271,11 @@ function insideOrOutside(){
   textAlign(CENTER);
   textSize(100);
   text("INSIDE OR OUTSIDE?", width/2, 150);
+  textSize(50);
+  fill(106, 4, 15);
+  text("INSIDE", redButton.x1 + 175, redButton.y1 + 90);
+  fill(141, 153, 174);
+  text("OUTSIDE", blackButton.x1 + 175, blackButton.y1 + 90);
   let sidebar = {
     x: 0,
     y: 0,
@@ -273,13 +296,13 @@ function insideOrOutside(){
   text("ROUND 2", 100, height/2+10);
   text("ROUND 3", 100, height-125);
   rectMode(CORNER);
-
+  
   fill(255);
   rect(32.5, 32.5, cardBase.cardWidth, cardBase.cardHeight);
   rectMode(CENTER);
   rect(100, height/2, cardBase.cardWidth, cardBase.cardHeight);
   rectMode(CORNER);
-
+  
   if (chosenSuit[0] === "hearts"){
     image(heartSymbol, 68, 105, 65, 65);
     fill(255,0,0);
@@ -328,6 +351,7 @@ function insideOrOutside(){
     textSize(35);
     text(chosenNumber[1], 55, 415);
   }
+  gameState = "round3";
 }
 
 function whatSuit(){
@@ -358,18 +382,19 @@ function whatSuit(){
     buttonWidth: 150,
     buttonHeight: 150
   };
-  fill(255, 0, 0);
+  fill(106, 4, 15);
   rect(heartButton.x1, heartButton.y1, heartButton.buttonWidth, heartButton.buttonHeight);
   image(heartSymbol, heartButton.x1+25, heartButton.y1+25, 100, 100);
-  fill(0);
+  fill(106, 4, 15);
   rect(diamondButton.x1, diamondButton.y1, diamondButton.buttonWidth, diamondButton.buttonHeight);
   image(diamondSymbol, diamondButton.x1+25, diamondButton.y1+25, 100, 100);
-  fill(255, 0, 0);
+  fill(141, 153, 174);
   rect(spadeButton.x1, spadeButton.y1, spadeButton.buttonWidth, spadeButton.buttonHeight);
   image(spadeSymbol, spadeButton.x1+25, spadeButton.y1+25, 100, 100);
-  fill(0);
+  fill(141, 153, 174);
   rect(clubButton.x1, clubButton.y1, clubButton.buttonWidth, clubButton.buttonHeight);
   image(clubSymbol, clubButton.x1+25, clubButton.y1+25, 100, 100);
+  fill(0);
   textAlign(CENTER);
   textSize(100);
   text("WHAT SUIT?", width/2, 150);
@@ -489,11 +514,39 @@ function transitionScreens(){
     textSize(50);
     fill(0);
     textAlign(CENTER);
-    text("DEALER WINS", width/2, height/2);
+    text("DEALER WINS", width/2-250, height/2);
     textSize(20);
-    text("Click to restart", width/2, height/2+200);
+    text("Click to restart", width/2-250, height/2+200);
+    fill(255);
+    rectMode(CENTER);
+    rect(width/2+250, height/2, 320, 450);
+    fill(0);
+    text("Your card was the " + losingNumber[0] + " of " + losingSuit[0], width/2-250, height/2+50);
+    textSize(75);
+    if (losingSuit[0] === "hearts"){
+      fill(255,0,0);
+      text(losingNumber[0], width/2+135, height/2-150);
+      image(heartSymbol, width/2+180, height/2-50, 125, 125);
+    }
+    else if (losingSuit[0] === "diamonds"){
+      fill(255,0,0);
+      text(losingNumber[0], width/2+135, height/2-150);
+      image(diamondSymbol, width/2+180, height/2-50, 125, 125);
+    }
+    else if (losingSuit[0] === "spades"){
+      fill(0);
+      text(losingNumber[0], width/2+135, height/2-150);
+      image(spadeSymbol, width/2+180, height/2-50, 125, 125);
+    }
+    else if (losingSuit[0] === "clubs"){
+      fill(0);
+      text(losingNumber[0], width/2+135, height/2-150);
+      image(clubSymbol, width/2+180, height/2-50, 125, 125);
+    }
+    fill(0);
+    rectMode(CORNER);
   }
-  else if (gameState === "goTo2" || gameState === "goTo3" || gameState === "goTo4"){
+  else if (gameState === "inBetween"){
     clear();
     background(166,196,138);
     textSize(50);
@@ -504,6 +557,15 @@ function transitionScreens(){
     fill(0);
     textSize(20);
     text("Click to continue", width/2, height/2+205);
+    if (previousState === "round1"){
+      gameState = "goTo2";
+    }
+    else if (previousState === "round2"){
+      gameState = "goTo3";
+    }
+    else if (previousState === "round3"){
+      gameState = "goTo4";
+    }
   }
   else if (gameState === "youWin"){
     winnerScreen();
@@ -522,6 +584,8 @@ function mousePressed(){
   if (gameState === "wrongRestart"){
     chosenSuit = [];
     chosenNumber = [];
+    losingSuit = [];
+    losingNumber = [];
     titleScreen();
   }
 
@@ -557,17 +621,23 @@ function mousePressed(){
   };
   if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenSuit[0] === "hearts" && gameState === "round1" || mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenSuit[0] === "diamonds" && gameState === "round1") {
     console.log(true);
-    gameState = "goTo2";
+    previousState = "round1";
+    gameState = "inBetween";
   }
   else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenSuit[0] === "clubs" && gameState === "round1" || mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenSuit[0] === "spades" && gameState === "round1") {
     console.log(true);
-    gameState = "goTo2";
+    previousState = "round1";
+    gameState = "inBetween";
   }
   else if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenSuit[0] === "spades" && gameState === "round1" || mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenSuit[0] === "clubs" && gameState === "round1") {
+    losingNumber.push(chosenNumber[0]);
+    losingSuit.push(chosenSuit[0]);
     console.log(false);
     gameState = "wrongRestart";
   }
   else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenSuit[0] === "hearts" && gameState === "round1" || mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenSuit[0] === "diamonds" && gameState === "round1") {
+    losingNumber.push(chosenNumber[0]);
+    losingSuit.push(chosenSuit[0]);
     console.log(false);
     gameState = "wrongRestart";
   }
@@ -576,20 +646,26 @@ function mousePressed(){
   //LEFT BUTTON//
   if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[0] < chosenNumber[1] && gameState === "round2") {
     console.log(true);
-    gameState = "goTo3";
+    previousState = "round2";
+    gameState = "inBetween";
   }
   //RIGHT BUTTON//
   else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[0] > chosenNumber[1] && gameState === "round2") {
     console.log(true);
-    gameState = "goTo3";
+    previousState = "round2";
+    gameState = "inBetween";
   }
   //LEFT BUTTON//
   else if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[0] > chosenNumber[1] && gameState === "round2") {
+    losingNumber.push(chosenNumber[1]);
+    losingSuit.push(chosenSuit[1]);
     console.log(false);
     gameState = "wrongRestart";
   }
   //RIGHT BUTTON//
   else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[0] < chosenNumber[1] && gameState === "round2") {
+    losingNumber.push(chosenNumber[1]);
+    losingSuit.push(chosenSuit[1]);
     console.log(false);
     gameState = "wrongRestart";
   }
@@ -598,18 +674,24 @@ function mousePressed(){
   //INSIDE//
   if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
     console.log(true);
-    gameState = "goTo4";
+    previousState = "round3";
+    gameState = "inBetween";
   }
   //OUTSIDE//
   else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
     console.log(true);
-    gameState = "goTo4";
+    previousState = "round3";
+    gameState = "inBetween";
   }
   else if (mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > redButton.x1 && mouseX < redButton.x1+redButton.buttonWidth && mouseY > redButton.y1 && mouseY < redButton.y1+redButton.buttonHeight && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
+    losingNumber.push(chosenNumber[2]);
+    losingSuit.push(chosenSuit[2]);
     console.log(false);
     gameState = "wrongRestart";
   }
-  else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3") {
+  else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
+    losingNumber.push(chosenNumber[2]);
+    losingSuit.push(chosenSuit[2]);
     console.log(false);
     gameState = "wrongRestart";
   }
@@ -655,6 +737,8 @@ function mousePressed(){
     gameState = "youWin";
   }
   else if (gameState === "round4" && mouseX > heartButton.x1 && mouseX < heartButton.x1+heartButton.buttonWidth && mouseY > heartButton.y1 && mouseY < heartButton.y1+heartButton.buttonHeight && chosenSuit[3] !== "hearts" || gameState === "round4" && mouseX > diamondButton.x1 && mouseX < diamondButton.x1+diamondButton.buttonWidth && mouseY > diamondButton.y1 && mouseY < diamondButton.y1+diamondButton.buttonHeight && chosenSuit[3] !== "diamonds" || gameState === "round4" && mouseX > spadeButton.x1 && mouseX < spadeButton.x1+spadeButton.buttonWidth && mouseY > spadeButton.y1 && spadeButton.y1+spadeButton.buttonHeight && chosenSuit[3] !== "spades" || gameState === "round4" && mouseX > clubButton.x1 && mouseX < clubButton.x1+clubButton.buttonWidth && mouseY > clubButton.y1 && mouseY < clubButton.y1+clubButton.buttonHeight && chosenSuit[3] !== "clubs"){
+    losingNumber.push(chosenNumber[3]);
+    losingSuit.push(chosenSuit[3]);
     console.log(false);
     gameState = "wrongRestart";
   }
