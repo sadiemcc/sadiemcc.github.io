@@ -1,23 +1,11 @@
 // Ride the Bus Card Game
-// Sadie McConnell
+// Sadie Kuzyk (McConnell)
 // Comp Sci 30
-// 10/10/25
+// 10/24/25
 
-// RULES
-// Round 1 : give one card face down, player guesses if it's red or black
-// Round 2 : player guesses if the next face down card is higher or lower than previous card
-// Round 3 : player guesses if the next face down card is "inside or outside" (in between previous cards or outside)
-// Round 4 : player guesses what suit the last face down card is
-// if player gets it wrong, dealer wins and reset game if some button 
+//I'm really proud of this, but unfortunately no extras for experts. 
 
-//gamestates = startScreen(title and instructions prompt), instructions(the instructions), round1(red or black), round2(higher or lower), round3(inside or outside), round4(guessing what suit), wrongRestart(when the dealer would win and the player would restart the whole game), nextRound(a "correct! next round..." screen to transition to next round), winner(complete all levels perfectly), inBetween (so you can't click prematurely)
-
-//TO DO
-//Finish winner screen
-//Fix clicking the next option prematurely
-//For inside/outside & higher/lower, fix duplicates
-//inside/outside, choosing outside and being wrong doesnt work
-
+//Initializing
 let K = 13;
 let Q = 12;
 let J = 11;
@@ -33,6 +21,7 @@ let cardBase = {
   cardHeight: 200
 };
 
+//Preloading images
 function preload(){
   cardBack = loadImage("images/playingCardBack.png");
   heartSymbol = loadImage("images/heartSymbol.png");
@@ -41,27 +30,28 @@ function preload(){
   clubSymbol = loadImage("images/clubsSymbol.png");
 }
 
+//Setup
 function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
   titleScreen();
 }
 
+//Draw
 function draw() {
   transitionScreens();
 }
 
+//Code for instructions, continuing to next round, and restarting after winning
 function keyPressed(){
   if (keyCode === 73 && gameState === "startScreen"){
     gameState = "instructions";
     fill("white");
     rect(100, 100, width-200, height-200);
-
     textSize(40);
     fill(0);
     textAlign(CENTER);
     text("INSTRUCTIONS", width/2, height/2 - 300);
-
     textSize(30);
     text("Round 1: Guess if the face-down card is red (hearts or diamonds) or if it's black (spades or clubs)", width/2, height/2-200);
     text("Round 2: Guess if the face-down card is higher or lower than your previous card", width/2, height/2-100);
@@ -75,8 +65,29 @@ function keyPressed(){
   if (keyCode === ESCAPE && gameState === "instructions"){
     titleScreen();
   }
+  if (keyCode === ENTER && gameState === "goTo2"){
+    clear();
+    higherOrLower();
+  }
+  else if (keyCode === ENTER && gameState === "goTo3"){
+    clear();
+    insideOrOutside();
+  }
+  else if (keyCode === ENTER && gameState === "goTo4"){
+    clear();
+    whatSuit();
+  }
+  else if (keyCode === ESCAPE && gameState === "youWin"){
+    clear();
+    chosenNumber = [];
+    chosenSuit = [];
+    losingSuit = [];
+    losingNumber = [];
+    titleScreen();
+  }
 }
 
+//Title screen
 function titleScreen(){
   gameState = "startScreen";
   clear();
@@ -97,6 +108,7 @@ function titleScreen(){
   rectMode(CORNER);
 }
 
+//Code to spawn random card and push into its own arrays
 function spawnCard() {
   let card = {
     suits: ["hearts", "diamonds", "spades", "clubs"],
@@ -161,13 +173,16 @@ function redOrBlack() {
   rectMode(CORNER);
 }
 
+//ROUND 2//
 function higherOrLower(){
   background(166,196,138);
   spawnCard();
-  if (chosenNumber[1] === chosenNumber[0]){
-    chosenNumber.pop(chosenNumber[1]);
-    chosenSuit.pop(chosenSuit[1]);
-    spawnCard();
+  for (n in chosenNumber){
+    if (chosenNumber[1] === chosenNumber[0] || chosenNumber[1]+1 === chosenNumber[0] || chosenNumber[1]-1 === chosenNumber[0]){
+      chosenNumber.pop(chosenNumber[1]);
+      chosenSuit.pop(chosenSuit[1]);
+      spawnCard();
+    }
   }
   let redButton = {
     x1: 300,
@@ -242,6 +257,7 @@ function higherOrLower(){
   gameState = "round2";
 }
 
+//ROUND 3//
 function insideOrOutside(){
   background(166,196,138);
   spawnCard();
@@ -354,6 +370,7 @@ function insideOrOutside(){
   gameState = "round3";
 }
 
+//ROUND 4//
 function whatSuit(){
   background(166,196,138);
   spawnCard();
@@ -499,14 +516,20 @@ function whatSuit(){
   }
 }
 
+//Screen when you win
 function winnerScreen(){
   background(255, 230, 167);
   textAlign(CENTER);
   textSize(75);
   fill(0);
   text("CONGRATULATIONS!", width/2, height/2 - 200);
+  textSize(50);
+  text("You beat the dealer!", width/2, height/2+50);
+  textSize(35);
+  text("Press esc to play again!", width/2, height/2+200);
 }
 
+//The "continue to next round" screen
 function transitionScreens(){
   if (gameState === "wrongRestart"){
     clear();
@@ -556,7 +579,7 @@ function transitionScreens(){
     textAlign(CENTER);
     fill(0);
     textSize(20);
-    text("Click to continue", width/2, height/2+205);
+    text("Press 'enter' to continue", width/2, height/2+205);
     if (previousState === "round1"){
       gameState = "goTo2";
     }
@@ -587,23 +610,6 @@ function mousePressed(){
     losingSuit = [];
     losingNumber = [];
     titleScreen();
-  }
-
-  //CODE FOR CONTINUING TO NEXT ROUND//
-  if (gameState === "goTo2"){
-    clear();
-    higherOrLower();
-  }
-  else if (gameState === "goTo3"){
-    clear();
-    insideOrOutside();
-  }
-  else if (gameState === "goTo4"){
-    clear();
-    whatSuit();
-  }
-  else if (gameState === "youWin"){
-    clear();
   }
 
   //BUTTONS FOR 1ST ROUND//
@@ -689,7 +695,7 @@ function mousePressed(){
     console.log(false);
     gameState = "wrongRestart";
   }
-  else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] > chosenNumber[0] && gameState === "round3" || mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] < chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
+  else if (mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3" || mouseX > blackButton.x1 && mouseX < blackButton.x1+blackButton.buttonWidth && mouseY > blackButton.y1 && mouseY < blackButton.y1+blackButton.buttonHeight && chosenNumber[2] > chosenNumber[1] && chosenNumber[2] < chosenNumber[0] && gameState === "round3") {
     losingNumber.push(chosenNumber[2]);
     losingSuit.push(chosenSuit[2]);
     console.log(false);
