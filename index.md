@@ -10,6 +10,7 @@
 - [Grid Demo](grid-demo)
 - [Rectangle Neighbours Demo](neighbours)
 - [Game of Life](game-of-life)
+- [Character In Grid](character-in-grid)
 
 ## Assignments
 - [Interactive Scene](interactive-scene)
