@@ -10,10 +10,12 @@ const SQUARE_DIMENTIONS = theGrid.length;
 let previousPressed;
 let lastSwitched = 0;
 let shownDuration = 5000;
-let drawDuration = 8000;
+let drawDuration = 6500;
+let checkDuration = 8000;
 let cellSize;
 let previousRound = [];
-let state = "drawing";
+let previousDrawn = [];
+let state = "shown";
 
 function setup() {
   createCanvas(windowWidth * 0.9, windowHeight * 0.9);
@@ -23,14 +25,48 @@ function setup() {
   else if (width > height && gameState === "hardMode"){
     cellSize = height/SQUARE_DIMENTIONS;
   }
- 
+  
 }
 
 function draw() {
-  
   passingTime();
   background("navy");
   showGrid();
+}
+
+function passingTime(){
+  if (millis() > lastSwitched + shownDuration && state === "shown"){
+    generateRandomGrid();
+    lastSwitched = millis();
+    theGrid = generateRandomGrid(SQUARE_DIMENTIONS, SQUARE_DIMENTIONS);
+    state = "drawing";
+    previousRound.push(theGrid);
+    console.log(previousRound);
+  }
+  else if (millis() > lastSwitched + drawDuration && state === "drawing"){
+    generateEmptyGrid();
+    lastSwitched = millis();
+    theGrid = generateEmptyGrid(SQUARE_DIMENTIONS, SQUARE_DIMENTIONS);
+    previousDrawn.push(theGrid);
+    console.log(previousDrawn);
+    state = "check";
+  }
+  else if (millis() > lastSwitched + checkDuration && state === "check"){
+    clear();
+    lastSwitched = millis();
+    if (previousRound[theGrid] === previousDrawn[theGrid]){
+      clear();
+      textAlign(CENTER);
+      text("TEST", width/2, height/2);
+    }
+    else if (previousRound !== previousDrawn){
+      text("NOPE", width/2, height/2);
+    }
+    state = "shown";
+  }
+  previousDrawn = [];
+  previousRound = [];
+  console.log(state);
 }
 
 function showGrid(){
@@ -51,7 +87,9 @@ function mousePressed(){
   let x = Math.floor(mouseX/cellSize);
   let y = Math.floor(mouseY/cellSize);
 
-  toggleCell(x, y);
+  if (state === "shown" || state === "check"){
+    toggleCell(x, y);
+  }
 }
 
 function toggleCell(x, y){
@@ -63,20 +101,6 @@ function toggleCell(x, y){
   }
 }
 
-function passingTime(){
-  if (millis() > lastSwitched + shownDuration && state === "drawing"){
-    generateRandomGrid();
-    lastSwitched = millis();
-    theGrid = generateRandomGrid(SQUARE_DIMENTIONS, SQUARE_DIMENTIONS);
-    let state = "shown";
-  }
-  else if (millis() > lastSwitched + drawDuration && state === "shown"){
-    generateEmptyGrid();
-    lastSwitched = millis();
-    theGrid = generateEmptyGrid(SQUARE_DIMENTIONS, SQUARE_DIMENTIONS);
-    let state = "drawing";
-  }
-}
 
 function generateRandomGrid(columns, rows){
   let newGrid = [];
