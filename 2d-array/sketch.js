@@ -1,5 +1,6 @@
 // 2D Array
 // Memorize the grid and redraw it after within 5 seconds
+// The code is messy and the game is not how i'd like it to be, but thats okay. ive been sick and thats not an excuse just an explaination. not my best work but either way im happy 
 
 let gameState = "hardMode";
 let theGrid = [[0, 0, 0, 0],
