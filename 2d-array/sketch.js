@@ -8,11 +8,12 @@ const SQUARE_DIMENTIONS = 4;
 let previousPressed;
 let lastSwitched = 0;
 let shownDuration = 5000;
-let drawDuration = 6500;
-let checkDuration = 8000;
+let drawDuration = 10000;
 let cellSize;
 let previousRound = [];
 let previousDrawn = [];
+let prevDrawn;
+let prevRound;
 let state = "shown";
 
 function setup() {
@@ -25,11 +26,11 @@ function setup() {
   }
   theGrid = generateRandomGrid(SQUARE_DIMENTIONS, SQUARE_DIMENTIONS);
   previousRound.push(theGrid);
+  words();
 }
 
 function draw() {
   passingTime();
-  background("navy");
   showGrid();
 }
 
@@ -77,8 +78,9 @@ function submitDrawing(){
   previousDrawn.push(theGrid);
   console.log(previousDrawn);
   console.log(previousRound);
+  
   if (previousRound[0] === previousDrawn[0]){
-    clear();
+    background("green");
   }
   else if (previousRound !== previousDrawn){
     state = "loss";
@@ -119,4 +121,13 @@ function generateEmptyGrid(columns, rows){
     }
   }
   return newGrid;
+}
+
+function words(){
+  textSize(75);
+  text("Memory Game", width/2+100, height/2-200);
+  textSize(35);
+  text("The grid will show a pattern.", width/2+100, height/2-100);
+  text("Memorize it and redraw it when", width/2+100, height/2-50);
+  text(" the grid turns clear.", width/2+100, height/2);
 }
