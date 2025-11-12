@@ -3,11 +3,8 @@
 // The code is messy and the game is not how i'd like it to be, but thats okay. ive been sick and thats not an excuse just an explaination. not my best work but either way im happy 
 
 let gameState = "hardMode";
-let theGrid = [[0, 0, 0, 0],
-               [0, 0, 0, 0],
-               [0, 0, 0, 0],
-               [0, 0, 0, 0]];
-const SQUARE_DIMENTIONS = theGrid.length;
+let theGrid;
+const SQUARE_DIMENTIONS = 4;
 let previousPressed;
 let lastSwitched = 0;
 let shownDuration = 5000;
@@ -26,7 +23,8 @@ function setup() {
   else if (width > height && gameState === "hardMode"){
     cellSize = height/SQUARE_DIMENTIONS;
   }
-  
+  theGrid = generateRandomGrid(SQUARE_DIMENTIONS, SQUARE_DIMENTIONS);
+  previousRound.push(theGrid);
 }
 
 function draw() {
@@ -37,37 +35,13 @@ function draw() {
 
 function passingTime(){
   if (millis() > lastSwitched + shownDuration && state === "shown"){
-    generateRandomGrid();
     lastSwitched = millis();
-    theGrid = generateRandomGrid(SQUARE_DIMENTIONS, SQUARE_DIMENTIONS);
     state = "drawing";
-    previousRound.push(theGrid);
-    console.log(previousRound);
+    theGrid = generateEmptyGrid(SQUARE_DIMENTIONS, SQUARE_DIMENTIONS);
   }
   else if (millis() > lastSwitched + drawDuration && state === "drawing"){
-    generateEmptyGrid();
-    lastSwitched = millis();
-    theGrid = generateEmptyGrid(SQUARE_DIMENTIONS, SQUARE_DIMENTIONS);
-    previousDrawn.push(theGrid);
-    console.log(previousDrawn);
-    state = "check";
+    submitDrawing();
   }
-  else if (millis() > lastSwitched + checkDuration && state === "check"){
-    clear();
-    lastSwitched = millis();
-    if (previousRound[theGrid] === previousDrawn[theGrid]){
-      clear();
-      textAlign(CENTER);
-      text("TEST", width/2, height/2);
-    }
-    else if (previousRound !== previousDrawn){
-      text("NOPE", width/2, height/2);
-    }
-    state = "shown";
-  }
-  previousDrawn = [];
-  previousRound = [];
-  console.log(state);
 }
 
 function showGrid(){
@@ -88,8 +62,26 @@ function mousePressed(){
   let x = Math.floor(mouseX/cellSize);
   let y = Math.floor(mouseY/cellSize);
 
-  if (state === "shown" || state === "check"){
+  if (state === "drawing"){
     toggleCell(x, y);
+  }
+}
+
+function keyPressed(){
+  if (key === " " && state === "drawing"){
+    submitDrawing();
+  }
+}
+
+function submitDrawing(){
+  previousDrawn.push(theGrid);
+  console.log(previousDrawn);
+  console.log(previousRound);
+  if (previousRound[0] === previousDrawn[0]){
+    clear();
+  }
+  else if (previousRound !== previousDrawn){
+    state = "loss";
   }
 }
 
@@ -101,7 +93,6 @@ function toggleCell(x, y){
     theGrid[y][x] = 1;
   }
 }
-
 
 function generateRandomGrid(columns, rows){
   let newGrid = [];

@@ -11,6 +11,8 @@
 - [Rectangle Neighbours Demo](neighbours)
 - [Game of Life](game-of-life)
 - [Character In Grid](character-in-grid)
+- [Platformer Skeleton](platformer-skeleton)
+- [Basic OOP](basic-oop)
 
 ## Assignments
 - [Interactive Scene](interactive-scene)
