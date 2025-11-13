@@ -1,18 +1,19 @@
 # CS 30 
 
 ## Demos
-- [Traffic Lights](traffic-lights)
-- [Bouncing Balls](bouncing-balls)
-- [Generative Art](generative-art)
-- [Perlin Noise](perlin-noise)
-- [Perlin Bubbles](perlin-bubbles)
-- [Terrain Generation](terrain)
-- [Grid Demo](grid-demo)
-- [Rectangle Neighbours Demo](neighbours)
-- [Game of Life](game-of-life)
-- [Character In Grid](character-in-grid)
-- [Platformer Skeleton](platformer-skeleton)
-- [Basic OOP](basic-oop)
+- [Traffic Lights](1-traffic-lights)
+- [Bouncing Balls](2-bouncing-balls)
+- [Generative Art](3-generative-art)
+- [Perlin Noise](4-perlin-noise)
+- [Perlin Bubbles](5-perlin-bubbles)
+- [Terrain Generation](6-terrain)
+- [Grid Demo](7-grid-demo)
+- [Rectangle Neighbours Demo](8-neighbours)
+- [Game of Life](9-game-of-life)
+- [Character In Grid](10-character-in-grid)
+- [Platformer Skeleton](11-platformer-skeleton)
+- [Basic OOP](12-basic-oop)
+- [Walker OOP](13-walker-oop)
 
 ## Assignments
 - [Interactive Scene](interactive-scene)
