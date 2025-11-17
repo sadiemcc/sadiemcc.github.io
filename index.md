@@ -17,6 +17,6 @@
 - [Fireworks OOP](14-fireworks)
 
 ## Assignments
-- [Interactive Scene](interactive-scene)
-- [Array and Object](array-and-object)
-- [2D Array](2d-array)
+- [Interactive Scene](A1-interactive-scene)
+- [Array and Object](A2-array-and-object)
+- [2D Array](A3-2d-array)
