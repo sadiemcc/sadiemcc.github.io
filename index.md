@@ -18,6 +18,7 @@
 - [Nodes OOP](15-nodes)
 - [OOP Inheritance](16-inheritance)
 - [Shape Inheritance](17-shape-inheritance)
+- [Sierpinski Triangle](18-sierpinski-triangle)
 
 ## Assignments
 - [Interactive Scene](A1-interactive-scene)
